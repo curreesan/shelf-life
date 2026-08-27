@@ -17,7 +17,7 @@ router.use(authMiddleware, attachHouseholdToReqObj);
 router.post("/", createItem);
 router.get("/", getItems);
 router.put("/:id", checkItemExists, checkOwnership, updateItem);
-router.patch("/:id/status", checkItemExists, checkOwnership, updateStatus);
+router.patch("/:id/status", checkItemExists, updateStatus);
 router.delete("/:id", checkItemExists, checkOwnership, deleteItem);
 
 export default router;

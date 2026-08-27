@@ -32,12 +32,15 @@ export const createItem = async (req, res) => {
 
 export const getItems = async (req, res) => {
   try {
-    const { category, status } = req.query;
+    const { category, status, sort } = req.query;
 
     const query = { householdId: req.householdId };
     if (category) query.category = category;
 
-    const items = await Item.find(query);
+    const allowedSorts = ["expiryDate", "-expiryDate"];
+    const sortOption = allowedSorts.includes(sort) ? sort : "expiryDate";
+
+    const items = await Item.find(query).sort(sortOption);
 
     const itemsWithStatus = items.map((item) => {
       const currentStatus =

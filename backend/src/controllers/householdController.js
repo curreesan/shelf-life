@@ -1,5 +1,6 @@
 import Household from "../models/Household.js";
 import User from "../models/User.js";
+import Item from "../models/Item.js";
 
 const generateInviteCode = () => {
   return Math.random().toString(36).slice(2, 8).toUpperCase();
@@ -92,6 +93,49 @@ export const getMyHousehold = async (req, res) => {
   } catch (err) {
     console.error(`Get Household Error : ${err}`);
     res.status(400).json({ message: "Failed to fetch household" });
+  }
+};
+
+export const leaveHousehold = async (req, res) => {
+  try {
+    const currentUser = await User.findById(req.userId);
+
+    if (!currentUser.householdId) {
+      return res.status(400).json({ message: "Not part of a household" });
+    }
+
+    const household = await Household.findById(currentUser.householdId);
+
+    const remainingMembers = household.members.filter(
+      (memberId) => !memberId.equals(req.userId)
+    );
+
+    currentUser.householdId = null;
+    await currentUser.save();
+
+    if (remainingMembers.length === 0) {
+      await Item.deleteMany({ householdId: household._id });
+      await household.deleteOne();
+
+      return res.status(200).json({ action: "deleted", message: "Household deleted" });
+    }
+
+    household.members = remainingMembers;
+
+    if (household.createdBy.equals(req.userId)) {
+      household.createdBy = remainingMembers[0];
+    }
+
+    await household.save();
+
+    res.status(200).json({
+      action: "left",
+      message: "Left household",
+      newAdmin: household.createdBy,
+    });
+  } catch (err) {
+    console.error(`Leave Household Error : ${err}`);
+    res.status(400).json({ message: "Failed to leave household" });
   }
 };
 
