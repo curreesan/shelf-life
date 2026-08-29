@@ -71,7 +71,7 @@ export function ItemRow({ item, onDelete, onMarkStatus, onSave, isActioning }) {
       <td>{item.category}</td>
       <td>{item.quantity}</td>
       <td>{new Date(item.expiryDate).toLocaleDateString()}</td>
-      <td>{item.status}</td>
+      <td className={`status status-${item.status}`}>{item.status}</td>
       <td>
         {!isFinal && (
           <>

@@ -37,7 +37,7 @@ export function RegisterPage() {
     <form onSubmit={handleSubmit}>
       <h1>Register</h1>
 
-      {error && <p>{error}</p>}
+      {error && <p className="error">{error}</p>}
 
       <input
         type="text"

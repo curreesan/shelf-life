@@ -91,9 +91,9 @@ export function ItemsPage() {
   };
 
   return (
-    <div>
+    <div className="page">
       <h1>Inventory</h1>
-      {error && <p>{error}</p>}
+      {error && <p className="error">{error}</p>}
 
       <select value={category} onChange={(e) => setCategory(e.target.value)}>
         <option value="all">All categories</option>

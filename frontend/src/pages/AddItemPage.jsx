@@ -42,12 +42,12 @@ export function AddItemPage() {
   };
 
   return (
-    <div>
+    <div className="page">
       <h1>Add Item</h1>
 
-      {error && <p>{error}</p>}
+      {error && <p className="error">{error}</p>}
       {success && (
-        <p>
+        <p className="success">
           Item added! <Link to="/items">View inventory</Link>
         </p>
       )}

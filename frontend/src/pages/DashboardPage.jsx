@@ -40,9 +40,9 @@ export function DashboardPage() {
   if (loading) return <p>Loading...</p>;
 
   return (
-    <div>
+    <div className="page">
       <h1>Dashboard</h1>
-      {error && <p>{error}</p>}
+      {error && <p className="error">{error}</p>}
 
       {counts && (
         <section>

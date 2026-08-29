@@ -77,9 +77,9 @@ export function HouseholdPage() {
   if (loading) return <p>Loading...</p>;
 
   return (
-    <div>
+    <div className="page">
       <h1>Household</h1>
-      {error && <p>{error}</p>}
+      {error && <p className="error">{error}</p>}
 
       {household ? (
         <HouseholdView
