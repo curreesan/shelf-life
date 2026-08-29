@@ -1,5 +1,6 @@
 import { Navigate } from "react-router-dom";
 import { useAuth } from "../context/useAuth.js";
+import { Navbar } from "./Navbar.jsx";
 
 export function ProtectedRoute({ children }) {
   const { token } = useAuth();
@@ -8,5 +9,10 @@ export function ProtectedRoute({ children }) {
     return <Navigate to="/login" replace />;
   }
 
-  return children;
+  return (
+    <>
+      <Navbar />
+      {children}
+    </>
+  );
 }
